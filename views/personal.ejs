@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html id = "background" lang="en">
+	<head>
+	  <meta charset="UTF-8">
+	  <title>GSP - Personal Info</title>
+	  <link rel="stylesheet" href="/stylesheets/style.css">
+	  <link rel="stylesheet" href="/stylesheets/client.css">
+	</head>
+	<body>
+	  <nav class="navbar">
+		<div class="nav-left">
+		  <div class="nav-logo">GSP</div>
+		  <h1 class="nav-title">Personal Information</h1>
+		</div>
+		<ul class="nav-links">
+		  <li><a href="/client">Home</a></li>
+		  <li><a href="/services">Services</a></li>
+		  <li><a href="/personal" class="active">Profile</a></li>
+		  <li><a href="#" id = "supportBtn">Support</a></li>
+		</ul>
+		<button id="logout-btn" onclick="window.location.href='/login'">Logout</button>
+	  </nav>
+
+	  <main>	
+	  <div class="client-container">
+		<h2>Your Information</h2>
+		<form class="client-info-form">
+		  <div class="form-row">
+			<div class="form-column">
+			  <label for="fname">First Name</label>
+			  <input type="text" id="fname" value="Dani">
+			</div>
+			<div class="form-column">
+			  <label for="lname">Last Name</label>
+			  <input type="text" id="lname" value="El Halabi">
+			</div>
+		  </div>
+
+		  <div class="form-row">
+			<div class="form-column">
+			  <label for="dob">Date of Birth</label>
+			  <input type="date" id="dob" value="2002-03-14">
+			</div>
+			<div class="form-column">
+			  <label for="pob">Place of Birth</label>
+			  <input type="text" id="pob" value="Bchamoun">
+			</div>
+		  </div>
+
+		  <div class="form-row">
+			<div class="form-column">
+			  <label for="email">Email</label>
+			  <input type="email" id="email" value="dani.elhalabi@std.balamand.edu.lb">
+			</div>
+			<div class="form-column">
+			  <label for="phone">Phone Number</label>
+			  <input type="text" id="phone" value="+961 03 072 042">
+			</div>
+		  </div>
+
+		  <button type="submit">Update Info</button>
+		</form>
+	  </div>
+	  </main>
+	  
+	  <div id="supportOverlay" class="overlay">
+		<div class="overlay-content">
+		  <span class="close-btn" id="closeOverlay">&times;</span>
+		  <h2>Contact Support</h2>
+		  <p><strong>Email:</strong> dani.elhalabi@std.balamand.edu.lb</p>
+		  <p><strong>Call us:</strong> +961&nbsp;03-072-042</p>
+		</div>
+	  </div>
+	  <footer style="text-align:center; padding:20px; color:#777;">
+	    <p>© 2025 Government Service Portal | All Rights Reserved</p>
+	  </footer>
+	  <script src= "/javascripts/universal.js"></script>
+	  <script src= "/javascripts/personal.js"></script>
+	</body>
+</html>

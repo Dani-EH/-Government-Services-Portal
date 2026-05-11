@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/client.css">
+    <title>GSP - Client Page</title>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="nav-left">
+        <div class="nav-logo">GSP</div>
+        <h1 class="nav-title">Client Dashboard</h1>
+      </div>
+      <ul class="nav-links">
+        <li><a href="/client" class="active">Home</a></li>
+        <li><a href = "/services">Services</a></li>
+        <li><a href="/personal">Profile</a></li>
+        <li><a href="#" id = "supportBtn" onclick="event.preventDefault()">Support</a></li>
+      </ul>
+      <button id="logout-btn" type="button" onclick="window.location.href='/login'">Logout</button>
+    </nav>
+	
+	<main>
+		<div class="client-container">
+		  <div class="client-info">
+			<h2 id="welcome-message">Welcome, [Username]</h2>
+			<p>Access your government services and information here.</p>
+		  </div>
+
+		  <div class="client-sections">
+			<div class="card">
+			  <h3>Personal Information</h3>
+			  <p>View and update your details.</p>
+			  <button onclick = "window.location.href='/personal'">View</button>
+			</div>
+
+			<div class="card">
+			  <h3>Service Requests</h3>
+			  <p>Check your submitted applications or submit new ones.</p>
+			  <button onclick = "window.location.href='/services'">Manage</button>
+			</div>
+
+			<div class="card">
+			  <h3>Support</h3>
+			  <p>Need help? Contact our support team.</p>
+			  <p>Email: dani.elhalabi@std.balamand.edu.lb</p>
+			  <p>Call us:+961 03-072-042</p>
+			</div>
+		  </div>
+		</div>
+	  </main>
+	  
+	  <div id="supportOverlay" class="overlay">
+		<div class="overlay-content">
+		  <span class="close-btn" id="closeOverlay">&times;</span>
+		  <h2>Contact Support</h2>
+		  <p><strong>Email:</strong> dani.elhalabi@std.balamand.edu.lb</p>
+		  <p><strong>Call us:</strong> +961&nbsp;03-072-042</p>
+		</div>
+	  </div>
+
+	  <footer style="text-align:center; padding:20px; color:#777;">
+		<p>© 2025 Government Service Portal | All Rights Reserved</p>
+	  </footer>
+	  <script src="/javascripts/universal.js"></script>
+	  <script src="/javascripts/client.js"></script>
+	</body>
+</html>

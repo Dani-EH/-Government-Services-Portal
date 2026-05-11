@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <section class="auth-hero" aria-label="Portal introduction">
+      <div class="brand-pill">Government Service Portal</div>
+      <h1>Create your account and start using digital services.</h1>
+      <p>
+        Register once, then request services and follow your application status from one place.
+      </p>
+
+      <div class="hero-grid">
+        <div class="hero-card">
+          <span>Fast</span>
+          <strong>Simple registration</strong>
+          <p>Only the essential details are needed to get started.</p>
+        </div>
+        <div class="hero-card">
+          <span>Safe</span>
+          <strong>Secure access</strong>
+          <p>Your password is sent to the backend for protected authentication.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="auth-card register-card" aria-label="Register form">
+      <div class="auth-card-header">
+        <p class="eyebrow">Get started</p>
+        <h2>Create account</h2>
+        <p>Fill in your details below.</p>
+      </div>
+
+      <div id="formAlert" class="form-alert" role="alert" hidden></div>
+
+      <form id="registerForm" class="auth-form" novalidate>
+        <div class="two-col">
+          <div>
+            <label for="first_name">First name</label>
+            <input id="first_name" name="first_name" type="text" placeholder="First name" autocomplete="given-name" required />
+          </div>
+          <div>
+            <label for="last_name">Last name</label>
+            <input id="last_name" name="last_name" type="text" placeholder="Last name" autocomplete="family-name" required />
+          </div>
+        </div>
+
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" placeholder="Choose a username" autocomplete="username" required />
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="name@example.com" autocomplete="email" required />
+
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" placeholder="+961 00 000 000" autocomplete="tel" />
+
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input id="password" name="password" type="password" placeholder="Create a password" autocomplete="new-password" required />
+          <button type="button" class="ghost-btn" data-toggle-password="password">Show</button>
+        </div>
+
+        <button class="primary-btn" type="submit">Create account</button>
+      </form>
+
+      <p class="auth-switch">
+        Already have an account? <a href="/">Login</a>
+      </p>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+  <script src="/javascripts/auth.js"></script>
+</body>
+</html>

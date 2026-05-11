@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head') %>
+</head>
+<body class="auth-page">
+  <main class="error-shell">
+    <section class="auth-card error-card">
+      <p class="eyebrow">Something went wrong</p>
+      <h1>Error <%= status || 500 %></h1>
+      <p><%= message || 'An unexpected error occurred.' %></p>
+      <a class="primary-btn link-btn" href="/">Back to login</a>
+    </section>
+  </main>
+</body>
+</html>

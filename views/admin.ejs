@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GSP - Admin Dashboard</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Override body for admin if needed, but style.css already has flex column */
+    body {
+      background: #f5f5f5;
+      background-image: none; /* remove background image for admin dash */
+    }
+
+    header {
+      flex: 0 0 auto;
+    }
+
+    /* Admin dashboard has its own navbar style in this file, 
+       but we should ensure it doesn't conflict with style.css fixed navbar if used.
+       Actually, style.css .navbar is fixed. Admin's .navbar here is not.
+    */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #4CAF50;
+      padding: 15px 30px;
+      color: white;
+      flex-wrap: wrap;
+      gap: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex: 0 0 auto;
+    }
+
+    .nav-logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav-title {
+      margin: 0;
+      font-size: 18px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.8;
+    }
+
+    .logout-btn {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .logout-btn:hover {
+      background-color: #b71c1c;
+    }
+
+    .admin-container {
+      flex: 1 0 auto;
+      width: 76%;
+      max-width: 1400px;
+      margin: 120px auto 30px auto; /* Add top margin for fixed header if it was fixed, or just consistent spacing */
+      padding: 25px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 3px solid #4CAF50;
+      padding-bottom: 15px;
+    }
+
+    .admin-header h1 {
+      margin: 0;
+      color: #333;
+      font-size: 28px;
+    }
+
+    /* Tabs Styling */
+    .admin-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      border: none;
+      background: #f1f1f1;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: 600;
+      color: #666;
+      transition: all 0.3s;
+    }
+
+    .tab-btn.active {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .tab-btn:hover:not(.active) {
+      background: #e0e0e0;
+    }
+
+    .admin-section {
+      display: none;
+    }
+
+    .admin-section.active {
+      display: block;
+    }
+
+    /* Stats Cards */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stats-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border-left: 4px solid #4CAF50;
+      text-align: center;
+    }
+
+    .stats-card h3 {
+      margin: 0;
+      font-size: 14px;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    .stats-card p {
+      margin: 10px 0 0 0;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* Search/Filter Bar */
+    .filter-bar {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .filter-input {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    #request-count, #user-count {
+      font-size: 16px;
+      color: #666;
+      white-space: nowrap;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      overflow-y: auto;
+      margin-top: 20px;
+      max-height: 450px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .requests-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .requests-table thead th {
+      position: sticky;
+      top: 0;
+      background-color: white;
+      z-index: 10;
+      box-shadow: inset 0 -1px 0 #45a049;
+    }
+
+    .requests-table th {
+      padding: 15px 12px;
+      text-align: left;
+      font-weight: 600;
+      border: 1px solid #45a049;
+    }
+
+    .requests-table td {
+      padding: 15px 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .requests-table tbody tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .requests-scroll-box {
+      max-height: 330px;
+      overflow-y: auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .requests-scroll-box::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .requests-scroll-box::-webkit-scrollbar-thumb {
+      background-color: #4CAF50;
+      border-radius: 10px;
+    }
+
+    .requests-scroll-box::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .status.pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .status.underway {
+      background-color: #cfe2ff;
+      color: #084298;
+    }
+
+    .status.done {
+      background-color: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .action-cell {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .status-select {
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 13px;
+      cursor: pointer;
+      min-width: 110px;
+    }
+
+    .update-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: background-color 0.3s;
+      white-space: nowrap;
+    }
+
+    .update-btn:hover {
+      background-color: #45a049;
+    }
+
+    .update-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #999;
+    }
+
+    footer {
+      flex: 0 0 auto;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+      color: #777;
+      background: white;
+      border-top: 1px solid #ddd;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+      }
+
+      .nav-left {
+        justify-content: center;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .admin-container {
+        margin: 15px;
+        padding: 15px;
+      }
+
+      .admin-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
+
+      .status-select,
+      .update-btn {
+        min-width: 100px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="nav-left">
+        <div class="nav-logo">GSP</div>
+        <h1 class="nav-title">Admin Dashboard</h1>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="/admin">Requests</a></li>
+        <li><a href="/admin">Manage Requests</a></li>
+      </ul>
+
+      <button class="logout-btn" id="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <div class="admin-container">
+    <div class="stats-container">
+      <div class="stats-card">
+        <h3>Total Requests</h3>
+        <p id="stat-total-requests">0</p>
+      </div>
+      <div class="stats-card">
+        <h3>Pending</h3>
+        <p id="stat-pending-requests">0</p>
+      </div>
+      <div class="stats-card">
+        <h3>Total Users</h3>
+        <p id="stat-total-users">0</p>
+      </div>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="tab-btn active" onclick="showSection('requests')">Requests</button>
+      <button class="tab-btn" onclick="showSection('users')">User Management</button>
+    </div>
+
+    <!-- Requests Section -->
+    <div id="requests-section" class="admin-section active">
+      <div class="admin-header">
+        <h1>Service Requests</h1>
+        <div id="request-count">Total: 0 requests</div>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" id="request-search" class="filter-input" placeholder="Search by ID, Client, or Service..." onkeyup="filterRequests()">
+        <select id="request-status-filter" class="status-select" onchange="filterRequests()">
+          <option value="all">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="underway">Underway</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
+
+      <div class="table-wrapper">
+        <div class="requests-scroll-box">
+          <table class="requests-table">
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Client Name</th>
+                <th>Service</th>
+                <th>Date Requested</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="requests-tbody">
+              <tr>
+                <td colspan="6" class="empty-state">Loading requests...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users Section -->
+    <div id="users-section" class="admin-section">
+      <div class="admin-header">
+        <h1>User Management</h1>
+        <div id="user-count">Total: 0 users</div>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" id="user-search" class="filter-input" placeholder="Search by name, email, or role..." onkeyup="filterUsers()">
+      </div>
+
+      <div class="table-wrapper">
+        <div class="requests-scroll-box">
+          <table class="requests-table">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Current Role</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody">
+              <tr>
+                <td colspan="5" class="empty-state">Loading users...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Government Service Portal | All Rights Reserved</p>
+  </footer>
+
+  <script src="/javascripts/universal.js"></script>
+  <script src="/javascripts/admin.js"></script>
+</body>
+</html>

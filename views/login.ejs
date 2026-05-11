@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html id = "background" lang = "en">
+	<head>
+		<meta charset="UTF-8">
+		<link rel = "stylesheet" href = "/stylesheets/style.css">
+		<link rel = "stylesheet" href = "/stylesheets/login.css">
+		<title>GSP-Login</title>
+	</head>
+	<body>
+	<header>
+		<nav class="navbar">
+			<div class="nav-left">
+				<div class="nav-logo">GSP</div>
+				<h1 class="nav-title">Government Services Portal</h1>
+			</div>
+		</nav>
+	</header>
+	<main>
+		<div class="login-container">
+			<form class = "login-form">
+				<div>
+					<label for = "Username">Username</label>
+					<input type = "text" name = "Username">
+				</div>
+				<br>
+				<div>
+					<label for = "Password">Password</label>
+					<input type = "Password" name = "Password">
+				</div>
+				<a href = "/signup"> Sign Up here</a>
+				<button id = "login-btn" type = "submit">Login</button>
+			</form>
+		</div>	
+		</main>
+		<footer style="text-align:center; padding:20px; margin-top:60px; color:#777;">
+			<p>© 2025 Government Service Portal | All Rights Reserved</p>
+		</footer>	
+		<script src="/javascripts/universal.js"></script>
+        <script src="/javascripts/login.js"></script>
+	</body>
+</html>

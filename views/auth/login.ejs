@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head') %>
+</head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <section class="auth-hero" aria-label="Portal introduction">
+      <div class="brand-pill">Government Service Portal</div>
+      <h1>Manage public service requests in one clean dashboard.</h1>
+      <p>
+        Sign in to request services, track updates, and access your account securely.
+      </p>
+
+      <div class="hero-grid">
+        <div class="hero-card">
+          <span>01</span>
+          <strong>Submit requests</strong>
+          <p>Choose a service and send your request in seconds.</p>
+        </div>
+        <div class="hero-card">
+          <span>02</span>
+          <strong>Track progress</strong>
+          <p>Follow status updates from pending to completed.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="auth-card" aria-label="Login form">
+      <div class="auth-card-header">
+        <p class="eyebrow">Welcome back</p>
+        <h2>Login to your account</h2>
+        <p>Enter your username and password to continue.</p>
+      </div>
+
+      <div id="formAlert" class="form-alert" role="alert" hidden></div>
+
+      <form id="loginForm" class="auth-form" novalidate>
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" placeholder="e.g. Dani" autocomplete="username" required />
+
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required />
+          <button type="button" class="ghost-btn" data-toggle-password="password">Show</button>
+        </div>
+
+        <button class="primary-btn" type="submit">Login</button>
+      </form>
+
+      <p class="auth-switch">
+        New here? <a href="/register">Create an account</a>
+      </p>
+    </section>
+  </main>
+
+  <%- include('../partials/footer') %>
+  <script src="../public/javascripts/auth.js"></script>
+</body>
+</html>

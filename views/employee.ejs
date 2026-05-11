@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html id="background" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/employee.css">
+    <title>GSP - Employee Page</title>
+  </head>
+  <body>
+		<nav class="navbar">
+		  <div class="nav-left">
+			<div class="nav-logo">GSP</div>
+			<h1 class="nav-title">Employee Dashboard</h1>
+		  </div>
+		  <ul class="nav-links">
+			<li><a href="/employee" class="active">Home</a></li>
+			<li><a href="#">Requests</a></li>
+			<li><a href="#">Settings</a></li>
+		  </ul>
+		  <button id = "logout-btn" onclick="window.location.href='/login'">Logout</button>
+		</nav>
+		
+		<main>
+		  <div class="employee-container">
+			<div class="employee-info">
+			  <h2 id="welcome-message">Welcome, Employee</h2>
+			  <p>Below is the list of all client service requests.</p>
+			</div>
+
+			<section class="requests-section">
+			  <div class="filter-bar">
+				<input 
+				  type="text" 
+				  id="searchInput" 
+				  placeholder="🔍 Search by service name or client ID..."
+				/>
+				<select id="statusFilter">
+				  <option value="">All Statuses</option>
+				  <option value="Pending">Pending</option>
+				  <option value="Underway">Underway</option>
+				  <option value="Done">Done</option>
+				</select>
+			  </div>
+
+			  <table class="requests-table">
+				<thead>
+				  <tr>
+					<th>Request ID</th>
+					<th>Client ID</th>
+					<th>Service</th>
+					<th>Date Requested</th>
+					<th>Status</th>
+					<th>Update Status</th>
+				  </tr>
+				</thead>
+				<tbody>
+				</tbody>
+			  </table>
+			</section>
+		  </div>
+		</main>
+
+	  <footer style="text-align:center; padding:20px; color:#777;">
+		<p>© 2025 Government Service Portal | All Rights Reserved</p>
+	  </footer>
+
+		<script src="/javascripts/universal.js"></script>
+		<script src="/javascripts/employee.js"></script>
+  </body>
+</html>
